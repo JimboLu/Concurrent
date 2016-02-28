@@ -43,15 +43,21 @@ public class Produce
     }
 
     /// <summary>
-    /// 设置信息
+    /// 生产者生产一件产品
     /// </summary>
-    /// <param name="name">任务名</param>
-    /// <param name="timeOfProduce">生产它所需要花费的时间</param>
-    /// <param name="timeOfConsume">消费它所需要花费的时间</param>
-    public void SetInfo(String name, Int32 timeOfProduce, Int32 timeOfConsume)
+    /// <returns></returns>
+    public static Produce Create()
     {
-        Name = name;
-        TimeOfProduce = timeOfProduce;
-        TimeOfConsume = timeOfConsume;
+        // 生产者生产产品
+        Produce produce = new Produce();
+
+        // 返回该产品
+        return produce;
+    }
+
+    public static Produce Create(String name, Int32 timeOfProduce, Int32 timeOfConsume)
+    {
+        Produce produce = new Produce(name, timeOfProduce, timeOfConsume);
+        return produce;
     }
 }

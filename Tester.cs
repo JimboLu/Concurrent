@@ -93,14 +93,14 @@ public class Tester
         Producer producer = new Producer(producerName);
 
         // 打印日志
-        StringBuilder log = new StringBuilder("生产者");
+        StringBuilder log = new StringBuilder("Producer ");
         log.Append("Name: ").Append(producerName);
         Console.WriteLine(log);
 
         // 该生产者一直生产产品
         while (true)
         {
-            Produce produce = producer.Create();
+            Produce produce = Produce.Create(producerName, 1000, 2000);
             produces.Push(produce);
             Thread.Sleep(1000);
         }
@@ -125,7 +125,7 @@ public class Tester
         QueueProduces produces = par.Produces;
 
         // 打印日志
-        StringBuilder log = new StringBuilder("消费者 ");
+        StringBuilder log = new StringBuilder("Consumer ");
         log.Append("Name: ").Append(name);
         Console.WriteLine(log);
 
@@ -140,7 +140,7 @@ public class Tester
 
                 // 打印日志
                 log.Clear();
-                log = new StringBuilder("消费 ");
+                log = new StringBuilder("Consume ");
                 log.Append("Name: ").Append(produce.Name);
                 Console.WriteLine(log);
             }

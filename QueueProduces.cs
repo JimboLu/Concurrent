@@ -30,19 +30,13 @@ public class QueueProduces
     /// <param name="task"></param>
     public void Push(Produce produce)
     {
-        if (Count >= Capacity)
-        {
-            Console.WriteLine("Queue is full");
-
-            // 队列已满
-            return;
-        }
-
         // 加锁，线程安全
         lock (end)
         {
             end.Produce = produce;
             end.Next = new Node();
+            end = end.Next;
+            Console.WriteLine("+");
             Count++;
 
             // 加入队列成功
@@ -57,18 +51,19 @@ public class QueueProduces
     /// <returns></returns>
     public Produce Get()
     {
-        if (Count == 0)
-        {
-            Console.WriteLine("Queue is empty");
-
-            // 队列为空，返回空
-            return null;
-        }
+        // 加锁，线程安全
         lock (head)
         {
+            if (head.Produce == null)
+            {
+                return null;
+            }
             Produce produce = head.Produce;
             head = head.Next;
+            Console.WriteLine("-");
             Count--;
+
+            // 返回一个产品
             return produce;
         }
     }

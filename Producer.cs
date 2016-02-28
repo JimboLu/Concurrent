@@ -16,17 +16,4 @@ public class Producer : Person
     {
         //Console.WriteLine("Producer Construct");
     }
-
-    /// <summary>
-    /// 生产者生产一件产品
-    /// </summary>
-    /// <returns></returns>
-    public Produce Create()
-    {
-        // 生产者生产产品
-        Produce produce = new Produce();
-
-        // 返回该产品
-        return produce;
-    }
 }
