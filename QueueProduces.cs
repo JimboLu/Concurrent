@@ -1,23 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
+using System.Collections.Generic;
 
 /// <summary>
 /// 队列
 /// </summary>
 public class QueueProduces
 {
-    /// <summary>
-    /// 容器
-    /// </summary>
-    List<Produce> produces = new List<Produce>();
+    // 产品库中产品数量
+    public int Count { get; private set; }
+
+    // 产品库的数量
+    public int Capacity { get; set; }
 
     /// <summary>
     /// 构造函数
     /// </summary>
     public QueueProduces()
     {
-
+        Count = 0;
+        Capacity = 100;
+        head = new Node();
+        end = head;
     }
 
     /// <summary>
@@ -26,17 +30,24 @@ public class QueueProduces
     /// <param name="task"></param>
     public void Push(Produce produce)
     {
-        lock (produces)
+        if (Count >= Capacity)
         {
-            produces.Add(produce);
-            int count = produces.Count;
-            String taskName = count.ToString();
-            produce.SetInfo(taskName, 1000, 1000);
+            Console.WriteLine("Queue is full");
 
-            // 打印日志
-            StringBuilder log = new StringBuilder("生产 ");
-            log.Append("Name: ").Append(produce.Name);
-            Console.WriteLine(log);
+            // 队列已满
+            return;
+        }
+
+        // 加锁，线程安全
+        lock (end)
+        {
+            end.Produce = produce;
+            end.Next = new Node();
+            Count++;
+
+            // 加入队列成功
+            Console.WriteLine("EnQueue");
+            
         }
     }
 
@@ -46,21 +57,41 @@ public class QueueProduces
     /// <returns></returns>
     public Produce Get()
     {
-        lock (produces)
+        if (Count == 0)
         {
-            if (produces.Count >= 1 && null != produces[0])
-            {
-                // 从List中把待消费的引用删除并返回
-                Produce produce = produces[0];
-                produces.RemoveAt(0);
-                return produce;
-            }
+            Console.WriteLine("Queue is empty");
 
-            // 缓冲区中没有产品
-            // Console.WriteLine("缓冲区中无产品");
+            // 队列为空，返回空
             return null;
         }
-
-
+        lock (head)
+        {
+            Produce produce = head.Produce;
+            head = head.Next;
+            Count--;
+            return produce;
+        }
     }
+
+    class Node
+    {
+        public Node()
+        {
+            Produce = null;
+            Next = null;
+        }
+
+        public Node(Produce produce)
+        {
+            Produce = produce;
+            Next = null;
+        }
+
+        public Produce Produce;
+
+        public Node Next;
+    }
+
+    Node head;
+    Node end;
 }

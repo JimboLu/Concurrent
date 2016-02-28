@@ -10,7 +10,8 @@ public class Consumer : Person
     /// 构造函数
     /// </summary>
     /// <param name="name"></param>
-    public Consumer(string name) : base(name)
+    public Consumer(string name)
+        : base(name)
     {
         //Console.WriteLine("Consumer Construct");
     }

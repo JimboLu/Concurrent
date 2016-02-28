@@ -13,7 +13,7 @@ public class Tester
     /// </summary>
     public Tester()
     {
-        
+
     }
 
     /// <summary>
@@ -98,7 +98,7 @@ public class Tester
         Console.WriteLine(log);
 
         // 该生产者一直生产产品
-        while(true)
+        while (true)
         {
             Produce produce = producer.Create();
             produces.Push(produce);
@@ -130,10 +130,10 @@ public class Tester
         Console.WriteLine(log);
 
         // 开始消费
-        while(true)
+        while (true)
         {
             Produce produce = produces.Get();
-            if(null != produce)
+            if (null != produce)
             {
                 int timeOfConsume = produce.TimeOfConsume;
                 Thread.Sleep(timeOfConsume);

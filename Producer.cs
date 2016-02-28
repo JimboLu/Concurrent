@@ -11,7 +11,8 @@ public class Producer : Person
     /// 构造函数
     /// </summary>
     /// <param name="name">名字</param>
-    public Producer(string name) : base(name)
+    public Producer(string name)
+        : base(name)
     {
         //Console.WriteLine("Producer Construct");
     }
